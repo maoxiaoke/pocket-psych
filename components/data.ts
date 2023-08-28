@@ -6,6 +6,7 @@ export interface CardType {
   title: string;
   poster: ImageSourcePropType;
   detail?: string;
+  cover?: string;
 }
 
 export const list: CardType[] = [
@@ -13,6 +14,7 @@ export const list: CardType[] = [
     id: 1,
     title: '社会认同',
     poster: require('../assets/poster/social-proof.png'),
+    cover: require('../assets/poster/test-poster.png'),
     detail: socialProof,
   },
   {

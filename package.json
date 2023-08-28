@@ -13,6 +13,7 @@
   "dependencies": {
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/native-stack": "^6.9.13",
+    "colorful-palette": "^1.0.4",
     "react": "18.2.0",
     "react-native": "0.72.3",
     "react-native-fs": "^2.20.0",

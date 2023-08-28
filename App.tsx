@@ -90,7 +90,15 @@ function App(): JSX.Element {
             headerShown: false,
           }}
         />
-        <Stack.Screen name="detail" component={Detail} />
+        <Stack.Screen
+          name="detail"
+          component={Detail}
+          options={{
+            headerShown: true,
+            headerTitle: '',
+            headerTransparent: true,
+          }}
+        />
         {/* <Stack.Screen name="Details" component={DetailsScreen} /> */}
       </Stack.Navigator>
       {/* <SafeAreaView> */}

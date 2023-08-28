@@ -7,11 +7,13 @@ import {
   View,
   Dimensions,
   FlatList,
+  Pressable,
 } from 'react-native';
 
-import {Link} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {getRandomColorBination} from 'colorful-palette';
 
 import {list, CardType} from './data';
 
@@ -31,16 +33,35 @@ const Header = (): JSX.Element => {
 };
 
 const Card = ({id, title, poster}: CardType): JSX.Element => {
+  const navigation = useNavigation();
+  const colorStyle = getRandomColorBination('mixed');
+
+  console.log('fsfdsf', colorStyle);
   return (
-    <View style={[styles.cardContainer]}>
+    <Pressable
+      style={[
+        styles.cardContainer,
+        {
+          backgroundColor: colorStyle.backgroundColor?.hex,
+        },
+      ]}
+      onPress={() => {
+        navigation.navigate('detail', {id: id});
+      }}>
       <View style={[styles.imageContainer]}>
         <Image source={poster} style={styles.image} resizeMode="cover" />
       </View>
 
-      <Link to={{screen: 'detail', params: {id: id}}} style={[styles.title]}>
-        <Text>{title}</Text>
-      </Link>
-    </View>
+      <Text
+        style={[
+          styles.title,
+          {
+            color: colorStyle.foregroundColor?.hex,
+          },
+        ]}>
+        {title}
+      </Text>
+    </Pressable>
   );
 };
 
@@ -83,7 +104,7 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     width: Dimensions.get('window').width / 2 - 18,
-    borderRadius: 28,
+    borderRadius: 8,
     overflow: 'hidden',
     backgroundColor: '#E7E5E4',
     marginBottom: 10,

@@ -1,14 +1,16 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {
+  StyleSheet,
+  Image,
+  Text,
+  View,
   SafeAreaView,
   ScrollView,
   StatusBar,
-  StyleSheet,
-  Text,
-  View,
+  TouchableOpacity,
 } from 'react-native';
-import {useRoute} from '@react-navigation/native';
-import Markdown from 'react-native-marked';
+import {useRoute, useNavigation} from '@react-navigation/native';
+import {useMarkdown} from 'react-native-marked';
 
 import {list} from '../components/data';
 
@@ -18,17 +20,66 @@ const Detail = () => {
   // eslint-disable-next-line eqeqeq
   const detail = list.find(item => item.id == route?.params?.id)?.detail;
 
+  const elements = useMarkdown(detail ?? '');
   return (
-    <SafeAreaView>
-      <Markdown value={detail ?? ''} />
-    </SafeAreaView>
+    <ScrollView style={styles.detail}>
+      <StatusBar
+        animated={true}
+        barStyle="light-content"
+        showHideTransition="none"
+        hidden={false}
+      />
+      <View style={styles.imageContainer}>
+        <Image
+          source={detail?.cover ?? require('../assets/poster/test-poster.png')}
+          resizeMode="cover"
+          style={styles.cover}
+        />
+        <View style={styles.likeContainer}>
+          <TouchableOpacity
+            onPress={() => {
+              // navigation.goBack();
+            }}>
+            <Image
+              source={require('../assets/icons/like.png')}
+              style={styles.arrow}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+      <ScrollView style={styles.markdown}>
+        {elements.map((element, index) => {
+          return <Fragment key={`demo_${index}`}>{element}</Fragment>;
+        })}
+      </ScrollView>
+    </ScrollView>
   );
 };
 
 export default Detail;
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 10,
+  detail: {
+    backgroundColor: '#fff',
+  },
+  imageContainer: {
+    position: 'relative',
+  },
+  likeContainer: {
+    position: 'absolute',
+    bottom: -30,
+    right: 20,
+  },
+  arrow: {
+    width: 60,
+    height: 60,
+  },
+  cover: {
+    width: '100%',
+    objectFit: 'cover',
+    height: 530,
+  },
+  markdown: {
+    padding: 20,
   },
 });
